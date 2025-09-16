@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Détails Patient - Medilabo Solutions</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+</head>
+
+<body>
+	<div class="container mt-5">
+		<div class="card shadow-lg">
+			<div class="card-header bg-primary text-white">
+				<h3>Détails du Patient</h3>
+			</div>
+			<div class="card-body">
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<strong>Nom :</strong> <span th:text="${patient.lastName}"></span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<strong>Prénom :</strong> <span th:text="${patient.firstName}"></span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<strong>Sexe :</strong> <span th:text="${patient.gender}"></span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<strong>Date de naissance :</strong> <span th:text="${patient.birthDate}"></span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-md-12">
+						<strong>Adresse :</strong> <span th:text="${patient.address}">N/A</span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<strong>Téléphone :</strong> <span th:text="${patient.phone}">N/A</span>
+					</div>
+				</div>
+				<a href="/patients" class="btn btn-secondary mt-3">← Retour à la liste</a>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
