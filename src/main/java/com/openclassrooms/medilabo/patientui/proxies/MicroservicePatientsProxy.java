@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.openclassrooms.medilabo.patientui.beans.PatientBean;
 
-@FeignClient(name = "patient-service", url = "localhost:9001")
+@FeignClient(name = "patient-service", url = "localhost:8080")
 public interface MicroservicePatientsProxy {
 
 	@GetMapping(value = "/patient/all")
