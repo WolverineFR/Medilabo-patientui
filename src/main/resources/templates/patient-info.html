@@ -43,7 +43,11 @@
 						<strong>Téléphone :</strong> <span th:text="${patient.phone}">N/A</span>
 					</div>
 				</div>
-				<a href="/patients" class="btn btn-secondary mt-3">← Retour à la liste</a>
+
+				<div class="d-flex justify-content-between mt-3">
+					<a th:href="@{/patients}" class="btn btn-secondary">← Retour à la liste</a>
+					<a th:href="@{/patient/update/{id}(id=${patient.id})}" class="btn btn-warning">Modifier</a>
+				</div>
 			</div>
 		</div>
 	</div>
