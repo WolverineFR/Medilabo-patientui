@@ -50,6 +50,33 @@
 				</div>
 			</div>
 		</div>
+		<div class="card shadow-lg mt-4">
+			<div class="card-header bg-info text-white">
+				<h4>Notes du Patient</h4>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Nom Patient</th>
+							<th>Contenu</th>
+							<th>Date de création</th>
+							<th>Dernière modification</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="note : ${notes}">
+							<td th:text="${note.patientName}"></td>
+							<td th:text="${note.note}"></td>
+							<td th:text="${#dates.format(note.date, 'dd/MM/yyyy HH:mm')}"></td>
+							<td th:text="${#dates.format(note.date, 'dd/MM/yyyy HH:mm')}">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 	</div>
 </body>
 

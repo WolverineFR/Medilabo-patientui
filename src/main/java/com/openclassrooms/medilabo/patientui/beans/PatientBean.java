@@ -11,31 +11,32 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class PatientBean {
+
 	private Integer id;
 
-    @NotBlank(message = "Le prénom est obligatoire")
-    private String firstName;
+	@NotBlank(message = "Le prénom est obligatoire")
+	private String firstName;
 
-    @NotBlank(message = "Le nom est obligatoire")
-    private String lastName;
+	@NotBlank(message = "Le nom est obligatoire")
+	private String lastName;
 
-    @NotNull(message = "La date de naissance est obligatoire")
-    @Past(message = "La date doit être dans le passé")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthDate;
+	@NotNull(message = "La date de naissance est obligatoire")
+	@Past(message = "La date doit être dans le passé")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate birthDate;
 
-    @NotNull(message = "Le genre est obligatoire")
-    private Gender gender;
+	@NotNull(message = "Le genre est obligatoire")
+	private Gender gender;
 
-    @Size(max = 255, message = "L'adresse ne doit pas dépasser 255 caractères")
-    private String address;
+	@Size(max = 255, message = "L'adresse ne doit pas dépasser 255 caractères")
+	private String address;
 
-    @Pattern(regexp = "^(\\+?[0-9 .-]{6,20})?$", message = "Téléphone invalide")
-    private String phone;
+	@Pattern(regexp = "^(\\+?[0-9 .-]{6,20})?$", message = "Téléphone invalide")
+	private String phone;
 
-    public enum Gender {
-        M, F
-    }
+	public enum Gender {
+		M, F
+	}
 
 	public PatientBean() {
 
