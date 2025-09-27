@@ -35,12 +35,14 @@
 				</div>
 				<div class="row mb-3">
 					<div class="col-md-12">
-						<strong>Adresse :</strong> <span th:text="${patient.address}">N/A</span>
+						<strong>Adresse :</strong> <span
+							th:text="${patient.address != null} ? ${patient.address} : 'Non renseigné'">N/A</span>
 					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-md-6">
-						<strong>Téléphone :</strong> <span th:text="${patient.phone}">N/A</span>
+						<strong>Téléphone :</strong> <span
+							th:text="${patient.phone != null} ? ${patient.phone} : 'Non renseigné'">N/A</span>
 					</div>
 				</div>
 

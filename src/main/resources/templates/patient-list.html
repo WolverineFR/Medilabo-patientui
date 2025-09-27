@@ -38,8 +38,8 @@
 					<td th:text="${patient.lastName}">Nom</td>
 					<td th:text="${patient.birthDate}">Date</td>
 					<td th:text="${patient.gender}">Sexe</td>
-					<td th:text="${patient.address}">Adresse</td>
-					<td th:text="${patient.phone}">Téléphone</td>
+					<td th:text="${patient.address != null} ? ${patient.address} : 'Non renseigné'">Adresse</td>
+					<td th:text="${patient.phone != null} ? ${patient.phone} : 'Non renseigné'">Téléphone</td>
 				</tr>
 			</tbody>
 		</table>
