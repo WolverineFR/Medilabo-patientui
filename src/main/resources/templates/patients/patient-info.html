@@ -9,7 +9,7 @@
 <body>
 	<div class="container mt-5">
 		<div class="card shadow-lg">
-			<div class="card-header bg-primary text-white">
+			<div class="card-header bg-dark text-white">
 				<h3>Détails du Patient</h3>
 			</div>
 			<div class="card-body">
@@ -53,8 +53,10 @@
 			</div>
 		</div>
 		<div class="card shadow-lg mt-4">
-			<div class="card-header bg-info text-white">
+			<div class="card-header bg-dark text-white">
 				<h4>Notes du Patient</h4>
+				<a th:href="@{/patient/{patientId}/note/add(patientId=${patient.id})}"
+					class="btn btn-success btn-sm">Ajouter un commentaire</a>
 			</div>
 			<div class="card-body">
 				<table class="table table-striped">
@@ -71,7 +73,15 @@
 							<td th:text="${note.patientName}"></td>
 							<td th:text="${note.note}"></td>
 							<td th:text="${#dates.format(note.date, 'dd/MM/yyyy HH:mm')}"></td>
-							<td th:text="${#dates.format(note.date, 'dd/MM/yyyy HH:mm')}">
+							<td th:text="${#dates.format(note.updatedDate, 'dd/MM/yyyy HH:mm')}">
+							</td>
+							<td>
+							<a th:href="@{/patient/{patientId}/note/update/{id}(patientId=${note.patientId}, id=${note.id})}"
+								class="btn btn-warning btn-sm">Modifier</a></td>
+						</tr>
+						<tr th:if="${#lists.isEmpty(notes)}">
+							<td colspan="5" class="text-muted font-italic">
+								Aucun commentaire n'a été ajouté pour le moment
 							</td>
 						</tr>
 					</tbody>

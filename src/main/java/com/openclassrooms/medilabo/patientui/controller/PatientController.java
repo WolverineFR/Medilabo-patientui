@@ -25,7 +25,7 @@ public class PatientController {
 	private final MicroservicePatientsProxy patientsProxy;
 	private final MicroserviceNotesProxy notesProxy;
 
-	public PatientController(MicroservicePatientsProxy patientsProxy,MicroserviceNotesProxy notesProxy ) {
+	public PatientController(MicroservicePatientsProxy patientsProxy, MicroserviceNotesProxy notesProxy) {
 		this.patientsProxy = patientsProxy;
 		this.notesProxy = notesProxy;
 	}
@@ -34,7 +34,7 @@ public class PatientController {
 	public String listPatient(Model model) {
 		List<PatientBean> patients = patientsProxy.getAllPatients();
 		model.addAttribute("patients", patients);
-		return "patient-list";
+		return "patients/patient-list";
 	}
 
 	@GetMapping("/patient/{id}")
@@ -43,21 +43,21 @@ public class PatientController {
 		List<NoteBean> notes = notesProxy.getNotesByPatientId(idToString);
 		model.addAttribute("patient", patientsProxy.getPatientById(id));
 		model.addAttribute("notes", notes);
-		return "patient-info";
+		return "patients/patient-info";
 	}
 
 	@GetMapping("patient/add")
 	public String showAddForm(Model model) {
-		
+
 		model.addAttribute("patient", new PatientBean());
-		return "patient-add";
+		return "patients/patient-add";
 	}
 
 	@PostMapping("patient/add")
 	public String savePatient(@Valid @ModelAttribute("patient") PatientBean patient, BindingResult result,
 			Model model) {
 		if (result.hasErrors()) {
-			return "patient-add";
+			return "patients/patient-add";
 		}
 		patientsProxy.savePatient(patient);
 		return "redirect:/patients";
@@ -66,27 +66,68 @@ public class PatientController {
 	@GetMapping("/patient/update/{id}")
 	public String showUpdateForm(@PathVariable Integer id, Model model) {
 		model.addAttribute("patient", patientsProxy.getPatientById(id));
-		return "patient-update";
+		return "patients/patient-update";
 	}
 
 	@PostMapping("/patient/update/{id}")
 	public String updatePatient(@PathVariable Integer id, @Valid @ModelAttribute("patient") PatientBean patient,
 			BindingResult result) {
 		if (result.hasErrors()) {
-			return "patient-update";
+			return "patients/patient-update";
 		}
 		patientsProxy.updatePatient(id, patient);
 		return "redirect:/patients";
 	}
-	
-	@PostMapping("/patients/{id}/notes")
-    public String addNote(@PathVariable String id, @RequestParam String noteContent) {
-        NoteBean note = new NoteBean();
-        note.setPatientId(id);
-        note.setNote(noteContent);
-        notesProxy.saveNote(note);
 
-        return "redirect:/patients/" + id;
-    }
+	@GetMapping("/patient/{id}/note/add")
+	public String showAddNoteForm(@PathVariable Integer id, Model model) {
+		model.addAttribute("patient", patientsProxy.getPatientById(id));
+		model.addAttribute("note", new NoteBean());
+		return "notes/note-add";
+	}
+
+	@PostMapping("/patient/{id}/note/add")
+	public String addNote(@PathVariable String id, @Valid @ModelAttribute("note") NoteBean note, BindingResult result,
+			Model model) {
+		Integer strToIntID = Integer.valueOf(id);
+		PatientBean patient = patientsProxy.getPatientById(strToIntID);
+
+		if (result.hasErrors()) {
+			model.addAttribute("patient", patient);
+			return "notes/note-add";
+		}
+		note.setId(null);
+		note.setPatientId(id);
+		note.setPatientName(patient.getLastName());
+		notesProxy.saveNote(note);
+
+		return "redirect:/patient/" + id;
+	}
+
+	@GetMapping("/patient/{patientId}/note/update/{id}")
+	public String showUpdateNoteForm(@PathVariable String id, @PathVariable String patientId, Model model) {
+		Integer strToIntID = Integer.valueOf(patientId);
+		model.addAttribute("patient", patientsProxy.getPatientById(strToIntID));
+		model.addAttribute("note", notesProxy.getNoteById(id));
+		return "notes/note-update";
+	}
+
+	@PostMapping("/patient/{patientId}/note/update/{id}")
+	public String updateNoteForm(@PathVariable String id, @PathVariable String patientId,@Valid @ModelAttribute("note") NoteBean note,
+			BindingResult result, Model model) {
+		Integer patientStrToIntID = Integer.valueOf(patientId);
+		PatientBean patient = patientsProxy.getPatientById(patientStrToIntID);
+
+		if (result.hasErrors()) {
+			model.addAttribute("patient", patient);
+			return "notes/note-update";
+		}
+		note.setId(id);
+		note.setPatientId(patientId);
+		note.setPatientName(patient.getLastName());
+		notesProxy.updateNote(id, note);
+
+		return "redirect:/patient/" + patientId;
+	}
 
 }

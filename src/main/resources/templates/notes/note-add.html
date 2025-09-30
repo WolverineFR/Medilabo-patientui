@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Ajouter une note - Medilabo Solutions</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+</head>
+
+<body>
+	<div class="container mt-5">
+		<div class="card shadow-lg">
+			<div class="card-header bg-dark text-white">
+				<h3>Ajouter une note</h3>
+			</div>
+			<div class="card-body">
+				<form th:action="@{/patient/{patientId}/note/add(patientId=${patient.id})}" th:object="${note}"
+					method="post">
+
+					<div class="mb-3">
+						<strong>Patient :</strong> <span
+							th:text="${patient.lastName} + ' ' + ${patient.firstName}"></span>
+					</div>
+
+					<div class="form-group">
+						<label for="note"><strong>Commentaire :</strong></label>
+						<textarea id="note" class="form-control" rows="5" th:field="*{note}" required></textarea>
+						<div class="text-danger mt-1" th:if="${#fields.hasErrors('note')}" th:errors="*{note}"></div>
+					</div>
+
+					<input type="hidden" th:field="*{patientId}" th:value="${patient.id}">
+
+					<div class="d-flex justify-content-between">
+						<a th:href="@{/patient/{id}(id=${patient.id})}" class="btn btn-secondary">← Retour</a>
+						<button type="submit" class="btn btn-success">Enregistrer</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
