@@ -30,6 +30,11 @@ public class PatientController {
 		this.notesProxy = notesProxy;
 	}
 
+	@GetMapping("/")
+	public String homeRedirect() {
+		return "redirect:/patients";
+	}
+
 	@RequestMapping("/patients")
 	public String listPatient(Model model) {
 		List<PatientBean> patients = patientsProxy.getAllPatients();
@@ -113,8 +118,8 @@ public class PatientController {
 	}
 
 	@PostMapping("/patient/{patientId}/note/update/{id}")
-	public String updateNoteForm(@PathVariable String id, @PathVariable String patientId,@Valid @ModelAttribute("note") NoteBean note,
-			BindingResult result, Model model) {
+	public String updateNoteForm(@PathVariable String id, @PathVariable String patientId,
+			@Valid @ModelAttribute("note") NoteBean note, BindingResult result, Model model) {
 		Integer patientStrToIntID = Integer.valueOf(patientId);
 		PatientBean patient = patientsProxy.getPatientById(patientStrToIntID);
 
