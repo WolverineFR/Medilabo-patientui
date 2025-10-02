@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.openclassrooms.medilabo.patientui.beans.PatientBean;
 import com.openclassrooms.medilabo.patientui.config.FeignAuthConfig;
 
-@FeignClient(name = "medilabo-patient-service", configuration = FeignAuthConfig.class)
+@FeignClient(name = "medilabo-patient-service", url = "http://localhost:8081/medilabo-patient-service", configuration = FeignAuthConfig.class)
 public interface MicroservicePatientsProxy {
 
 	@GetMapping(value = "/patient/all")

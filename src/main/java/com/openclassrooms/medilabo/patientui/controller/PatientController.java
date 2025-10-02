@@ -35,7 +35,7 @@ public class PatientController {
 		return "redirect:/patients";
 	}
 
-	@RequestMapping("/patients")
+	@GetMapping("/patients")
 	public String listPatient(Model model) {
 		List<PatientBean> patients = patientsProxy.getAllPatients();
 		model.addAttribute("patients", patients);
