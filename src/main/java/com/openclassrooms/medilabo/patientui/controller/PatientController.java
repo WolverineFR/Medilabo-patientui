@@ -2,6 +2,7 @@ package com.openclassrooms.medilabo.patientui.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,18 +17,26 @@ import com.openclassrooms.medilabo.patientui.beans.NoteBean;
 import com.openclassrooms.medilabo.patientui.beans.PatientBean;
 import com.openclassrooms.medilabo.patientui.proxies.MicroserviceNotesProxy;
 import com.openclassrooms.medilabo.patientui.proxies.MicroservicePatientsProxy;
+import com.openclassrooms.medilabo.patientui.proxies.MicroserviceRiskCalculatorProxy;
 
 import jakarta.validation.Valid;
 
 @Controller
 public class PatientController {
 
+	@Autowired
 	private final MicroservicePatientsProxy patientsProxy;
+	
+	@Autowired
 	private final MicroserviceNotesProxy notesProxy;
+	
+	@Autowired
+	private final MicroserviceRiskCalculatorProxy riskCalcProxy;
 
-	public PatientController(MicroservicePatientsProxy patientsProxy, MicroserviceNotesProxy notesProxy) {
+	public PatientController(MicroservicePatientsProxy patientsProxy, MicroserviceNotesProxy notesProxy, MicroserviceRiskCalculatorProxy riskCalcProxy) {
 		this.patientsProxy = patientsProxy;
 		this.notesProxy = notesProxy;
+		this.riskCalcProxy = riskCalcProxy;
 	}
 
 	@GetMapping("/")
@@ -48,6 +57,7 @@ public class PatientController {
 		List<NoteBean> notes = notesProxy.getNotesByPatientId(idToString);
 		model.addAttribute("patient", patientsProxy.getPatientById(id));
 		model.addAttribute("notes", notes);
+		model.addAttribute("riskLevel", riskCalcProxy.getRiskLevelByPatientId(idToString));
 		return "patients/patient-info";
 	}
 

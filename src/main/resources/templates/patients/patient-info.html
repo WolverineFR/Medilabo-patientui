@@ -52,6 +52,25 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="card shadow-lg mt-4">
+			<div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+				<h4 class="mb-0">Niveau de Risque</h4>
+				<i class="bi bi-heart-pulse-fill"></i>
+			</div>
+			<div class="card-body text-center">
+				<div th:if="${riskLevel != null}">
+					<h5 class="font-weight-bold">Résultat :</h5>
+					<p class="display-5" th:switch="${#strings.toUpperCase(riskLevel.diabetesRiskLevel)}">
+					    <span th:case="'NONE'">Aucun risque</span>
+					    <span th:case="'BORDERLINE'">Risque limité</span>
+					    <span th:case="'INDANGER'">Danger</span>
+					    <span th:case="'EARLYONSET'">Apparition précoce</span>
+					</p>
+				</div>
+			</div>
+		</div>
+
 		<div class="card shadow-lg mt-4">
 			<div class="card-header bg-dark text-white">
 				<h4>Notes du Patient</h4>
@@ -76,8 +95,9 @@
 							<td th:text="${#dates.format(note.updatedDate, 'dd/MM/yyyy HH:mm')}">
 							</td>
 							<td>
-							<a th:href="@{/patient/{patientId}/note/update/{id}(patientId=${note.patientId}, id=${note.id})}"
-								class="btn btn-warning btn-sm">Modifier</a></td>
+								<a th:href="@{/patient/{patientId}/note/update/{id}(patientId=${note.patientId}, id=${note.id})}"
+									class="btn btn-warning btn-sm">Modifier</a>
+							</td>
 						</tr>
 						<tr th:if="${#lists.isEmpty(notes)}">
 							<td colspan="5" class="text-muted font-italic">
