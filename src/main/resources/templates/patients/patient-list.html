@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Medilabo Solutions</title>
+	<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+	<style>
+		tbody tr:hover {
+			background-color: #e0e0e0;
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container mt-5">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<h2>Liste des Patients</h2>
+			<a href="/patient/add" class="btn btn-primary">+ Ajouter un patient</a>
+		</div>
+
+		<table class="table table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th>ID</th>
+					<th>Prénom</th>
+					<th>Nom</th>
+					<th>Date de naissance</th>
+					<th>Sexe</th>
+					<th>Adresse</th>
+					<th>Téléphone</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="patient : ${patients}" th:onclick="'window.location=\'/patient/' + ${patient.id} + '\';'">
+					<td th:text="${patient.id}">ID</td>
+					<td th:text="${patient.firstName}">Prénom</td>
+					<td th:text="${patient.lastName}">Nom</td>
+					<td th:text="${patient.birthDate}">Date</td>
+					<td th:text="${patient.gender}">Sexe</td>
+					<td th:text="${patient.address != null} ? ${patient.address} : 'Non renseigné'">Adresse</td>
+					<td th:text="${patient.phone != null} ? ${patient.phone} : 'Non renseigné'">Téléphone</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>

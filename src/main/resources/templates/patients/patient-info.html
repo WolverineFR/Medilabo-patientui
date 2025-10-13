@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Détails Patient - Medilabo Solutions</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+</head>
+
+<body>
+	<div class="container mt-5">
+		<div class="card shadow-lg">
+			<div class="card-header bg-dark text-white">
+				<h3>Détails du Patient</h3>
+			</div>
+			<div class="card-body">
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<strong>Nom :</strong> <span th:text="${patient.lastName}"></span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<strong>Prénom :</strong> <span th:text="${patient.firstName}"></span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<strong>Sexe :</strong> <span th:text="${patient.gender}"></span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<strong>Date de naissance :</strong> <span th:text="${patient.birthDate}"></span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-md-12">
+						<strong>Adresse :</strong> <span
+							th:text="${patient.address != null} ? ${patient.address} : 'Non renseigné'">N/A</span>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<strong>Téléphone :</strong> <span
+							th:text="${patient.phone != null} ? ${patient.phone} : 'Non renseigné'">N/A</span>
+					</div>
+				</div>
+
+				<div class="d-flex justify-content-between mt-3">
+					<a th:href="@{/patients}" class="btn btn-secondary">← Retour à la liste</a>
+					<a th:href="@{/patient/update/{id}(id=${patient.id})}" class="btn btn-warning">Modifier</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="card shadow-lg mt-4">
+			<div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+				<h4 class="mb-0">Niveau de Risque</h4>
+				<i class="bi bi-heart-pulse-fill"></i>
+			</div>
+			<div class="card-body text-center">
+				<div th:if="${riskLevel != null}">
+					<h5 class="font-weight-bold">Résultat :</h5>
+					<p class="display-5" th:switch="${#strings.toUpperCase(riskLevel.diabetesRiskLevel)}">
+					    <span th:case="'NONE'">Aucun risque</span>
+					    <span th:case="'BORDERLINE'">Risque limité</span>
+					    <span th:case="'INDANGER'">Danger</span>
+					    <span th:case="'EARLYONSET'">Apparition précoce</span>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="card shadow-lg mt-4">
+			<div class="card-header bg-dark text-white">
+				<h4>Notes du Patient</h4>
+				<a th:href="@{/patient/{patientId}/note/add(patientId=${patient.id})}"
+					class="btn btn-success btn-sm">Ajouter un commentaire</a>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Nom Patient</th>
+							<th>Contenu</th>
+							<th>Date de création</th>
+							<th>Dernière modification</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="note : ${notes}">
+							<td th:text="${note.patientName}"></td>
+							<td th:text="${note.note}"></td>
+							<td th:text="${#dates.format(note.date, 'dd/MM/yyyy HH:mm')}"></td>
+							<td th:text="${#dates.format(note.updatedDate, 'dd/MM/yyyy HH:mm')}">
+							</td>
+							<td>
+								<a th:href="@{/patient/{patientId}/note/update/{id}(patientId=${note.patientId}, id=${note.id})}"
+									class="btn btn-warning btn-sm">Modifier</a>
+							</td>
+						</tr>
+						<tr th:if="${#lists.isEmpty(notes)}">
+							<td colspan="5" class="text-muted font-italic">
+								Aucun commentaire n'a été ajouté pour le moment
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+
+</html>
