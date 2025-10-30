@@ -36,13 +36,8 @@ import jakarta.validation.Valid;
 @Controller
 public class PatientController {
 
-	@Autowired
 	private final MicroservicePatientsProxy patientsProxy;
-
-	@Autowired
 	private final MicroserviceNotesProxy notesProxy;
-
-	@Autowired
 	private final MicroserviceRiskCalculatorProxy riskCalcProxy;
 
 	public PatientController(MicroservicePatientsProxy patientsProxy, MicroserviceNotesProxy notesProxy,
